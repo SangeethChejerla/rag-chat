@@ -12,7 +12,7 @@ interface InputBarProps {
 const isLocal = process.env.NODE_ENV === 'development';
 const baseURL = isLocal
   ? 'http://localhost:3000/'
-  : 'https://rag-chat.vercel.app/';
+  : 'https://rag-chat-phi.vercel.app/';
 
 const InputBar = ({
   onSubmit,

@@ -1,9 +1,9 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { Bot, Home, Send, User } from 'lucide-react'; // Added Home icon
+import { Bot, Home, Send, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 // @ts-ignore
-import { useRouter } from 'next/navigation'; // Import the useRouter hook
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import React, { useEffect, useRef, useState } from 'react';
