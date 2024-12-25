@@ -1,7 +1,9 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { Bot, Send, User } from 'lucide-react';
+import { Bot, Home, Send, User } from 'lucide-react'; // Added Home icon
+// @ts-ignore
+import { useRouter } from 'next/navigation'; // Import the useRouter hook
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import React, { useEffect, useRef, useState } from 'react';
@@ -26,6 +28,7 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
 }) => {
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const [inputHeight, setInputHeight] = useState('auto');
+  const router = useRouter(); // Initialize the router
 
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
@@ -57,10 +60,22 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
     }
   };
 
+  const handleGoHome = () => {
+    router.push('/'); // Navigate back to the home page
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="flex flex-col w-full max-w-3xl bg-white rounded-lg shadow-2xl overflow-hidden">
-        <div className="flex justify-end p-4"></div>
+    <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex flex-col w-full max-w-3xl rounded-lg shadow-2xl overflow-hidden">
+        <div className="flex justify-between p-4">
+          <button
+            onClick={handleGoHome}
+            className="px-2 py-1 rounded-md  focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <Home className="w-5 h-5" />
+          </button>
+          <div></div>
+        </div>
         <div
           ref={chatWindowRef}
           className="flex-1 overflow-y-auto p-6 space-y-4"
@@ -103,15 +118,13 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
                     }) {
                       const match = /language-(\w+)/.exec(className || '');
                       return !inline && match ? (
-                        <pre className="bg-gray-800 text-gray-100 p-3 rounded-md overflow-x-auto font-mono text-sm">
+                        <pre className=" p-3 rounded-md overflow-x-auto font-mono text-sm">
                           <code className={`language-${match[1]}`}>
                             {children}
                           </code>
                         </pre>
                       ) : (
-                        <code className="bg-gray-200 text-gray-800 p-1 rounded">
-                          {children}
-                        </code>
+                        <code className=" p-1 rounded">{children}</code>
                       );
                     },
                   }}
@@ -126,13 +139,13 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-gray-50 text-gray-800 rounded-2xl p-3 shadow-md animate-pulse">
+              <div className=" rounded-2xl p-3 shadow-md animate-pulse">
                 <p className="text-sm font-medium">AI is thinking...</p>
               </div>
             </div>
           )}
         </div>
-        <div className="p-4 border-t shadow-lg bg-gray-50 sticky bottom-0">
+        <div className="p-4 border-t shadow-lg  sticky bottom-0">
           <form onSubmit={handleSubmit} className="flex items-center space-x-3">
             <input
               type="text"
@@ -140,7 +153,7 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
               onChange={handleInputResize}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className={`flex-1 px-4 py-2 bg-gray-100 rounded-full shadow-inner text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition`}
+              className={`flex-1 px-4 py-2 rounded-full shadow-inner text-black  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition`}
               aria-label="Chat input box"
               autoFocus
               style={{ height: inputHeight }}
@@ -148,7 +161,7 @@ export const ChatWrapper: React.FC<ChatWrapperProps> = ({
             <button
               type="submit"
               disabled={isLoading}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-indigo-600 rounded-full shadow-md hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send className="w-5 h-5" />
             </button>

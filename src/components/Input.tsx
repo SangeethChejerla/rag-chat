@@ -11,7 +11,7 @@ interface InputBarProps {
 // Determine the base URL based on the environment.
 const isLocal = process.env.NODE_ENV === 'development';
 const baseURL = isLocal
-  ? 'http://localhost:3001/'
+  ? 'http://localhost:3000/'
   : 'https://rag-chat.vercel.app/';
 
 const InputBar = ({
